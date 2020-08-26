@@ -9,16 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: thyrlian/android-sdk:latest
     steps:
     - uses: actions/checkout@v2
+    - name: Set timezone
+      run: export TZ="Etc/UTC"; ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
     - name: Install build dependencies
-      run: sudo apt-get -y install ffmpeg libsdl2-2.0-0 adb \
-       gcc git pkg-config meson ninja-build \
-       libavcodec-dev libavformat-dev libavutil-dev \
-       libsdl2-dev openjdk-8-jdk python3-pip \
-       mingw-w64 mingw-w64-tools android-tools-adb
+      run: apt-get update && apt-get -y install ffmpeg libsdl2-2.0-0 android-sdk adb build-essential git pkg-config meson ninja-build libavcodec-dev libavformat-dev libavutil-dev libsdl2-dev openjdk-8-jdk python3-pip mingw-w64 mingw-w64-tools android-tools-adb
     - name: Build scrcpy
-      run: bash release.sh
+      run: ./release.sh
     - uses: actions/upload-artifact@v2
       with:
         name: scrcpy
