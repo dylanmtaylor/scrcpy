@@ -8,4 +8,5 @@ RUN export TZ="Etc/UTC"; ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo 
 RUN groupadd -r builder && useradd -m -r -g builder builder && chown -R builder:builder /opt/android-sdk
 USER builder
 
-CMD cd /scrcpy && ./release.sh
+CMD cd /scrcpy && ./release.sh && cd /scrcpy && meson x --buildtype release --strip -Db_lto=true && ninja -Cx
+
