@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: thyrlian/android-sdk:latest
     steps:
     - uses: actions/checkout@v2
     - name: Workaround for checkstyle failurs
